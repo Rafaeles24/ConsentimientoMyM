@@ -1,0 +1,25 @@
+# Node
+node_modules
+npm-debug.log
+
+# Next
+.next
+out
+
+# Nest
+dist
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+prisma/dev.db

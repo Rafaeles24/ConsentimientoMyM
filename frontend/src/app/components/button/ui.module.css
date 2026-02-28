@@ -1,0 +1,29 @@
+.formButton {
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2bb394; /* verde principal */
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+/* Hover más oscuro */
+.formButton:hover:not(:disabled) {
+    background-color: #249e84; /* un poco más oscuro */
+}
+
+/* Active (click) */
+.formButton:active:not(:disabled) {
+    background-color: #1f8c74;
+}
+
+/* Disabled */
+.formButton:disabled {
+    background-color: #2bb394;
+    opacity: 0.6;
+    cursor: not-allowed;
+}

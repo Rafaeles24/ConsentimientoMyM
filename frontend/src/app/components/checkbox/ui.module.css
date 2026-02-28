@@ -1,0 +1,59 @@
+.container {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+    user-select: none;
+}
+
+.input {
+    display: none;
+}
+
+/* Caja visual */
+.custom {
+    min-width: 18px;
+    height: 18px;
+    border: 1.5px solid #cfd8dc;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    margin-top: 2px;
+}
+
+/* Estado checked */
+.input:checked + .custom {
+    background-color: #1976d2;
+    border-color: #1976d2;
+    position: relative;
+}
+
+/* Check interno */
+.input:checked + .custom::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+/* Hover */
+.container:hover .custom {
+    border-color: #1976d2;
+}
+
+.text {
+    flex: 1;
+}
+
+.required {
+    color: #e53935;
+    font-weight: 500;
+}

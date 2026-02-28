@@ -1,0 +1,27 @@
+.concentHeader {
+    margin: 16px 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #2bb394;
+    color: #2bb394;
+    border-radius: 5px;
+    max-width: 300px;
+    padding: 10px 14px;
+    user-select: none;
+    transition: background-color 0.2s ease;
+    text-align: center;
+}
+
+.concentHeader:hover {
+    background-color: #249e84;
+    color: white;
+}
+
+.concentBody {
+    color: rgba(0, 0, 0, 0.5);
+    padding-bottom: 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+}
