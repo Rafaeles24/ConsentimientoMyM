@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, ParseIntPipe } from '@nestjs/common';
 import { ConsentimientoService } from './consentimiento.service';
 import { ProxyIpService } from 'src/proxy-ip/proxy-ip.service';
 import { CreateConsentimientoDto } from './dto/create-consentimiento.dto';
@@ -9,6 +9,14 @@ export class ConsentimientoController {
     private readonly consentimientoService: ConsentimientoService,
     private readonly proxyIpService: ProxyIpService
   ) {}
+
+  @Get(':origen/:id')
+  getConsentimiento(
+    @Param('origen') origen: string,
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.consentimientoService.findConsentimientoProId(id, origen);
+  }
 
   @Post('/registrar')
   create(

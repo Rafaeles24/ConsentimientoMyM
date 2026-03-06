@@ -6,12 +6,14 @@ export default function EditableInput(
         label,
         value="",
         maxLength=255,
+        error=null,
         onChange 
     } : {
-        label: string,
-        value: string,
-        maxLength?: number,
-        onChange: (e: any) => void
+        label: string;
+        value: string;
+        maxLength?: number;
+        error?: string | null;
+        onChange: (e: any) => void;
     }
 ) {
     return (
@@ -24,6 +26,7 @@ export default function EditableInput(
                 onChange={onChange} 
                 className={styles.input}
             />
+            { error && <label className={styles.error}>{error}</label>}
         </div>
     )
 }

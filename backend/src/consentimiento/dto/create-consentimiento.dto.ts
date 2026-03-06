@@ -1,8 +1,9 @@
 import { IsBoolean, IsNotEmpty, IsNumberString, IsString, Length } from "class-validator";
 
 export class CreateConsentimientoDto {
-    @IsNumberString()
+    @IsString()
     @IsNotEmpty()
+    @Length(5, 18)
     dni: string;
 
     @IsString()
