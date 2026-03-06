@@ -13,14 +13,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Form {
+model Demo_Telecom {
   id Int @id @default(autoincrement())
   dni String @unique @db.VarChar(8)
-  phone_number String @unique @db.VarChar(9)
-  phone_contact String @db.VarChar(9)
-  full_name String @db.VarChar(255)
-  verified Boolean @default(false)
-  ip_address String? @db.VarChar(255)
-  created_at DateTime @default(now())
+  num_telefono String @unique @db.VarChar(9)
+  num_contacto String @db.VarChar(9)
+  nombre_completo String @db.VarChar(255)
+  verificado Boolean @default(false)
+  direccion_ip String? @db.VarChar(255)
+  fecha_consentimiento DateTime @default(now())
 }
+
+model Energia_Global_Spain {
+  id Int @id @default(autoincrement())
+  dni String @unique @db.VarChar(8)
+  num_telefono String @unique @db.VarChar(9)
+  num_contacto String @db.VarChar(9)
+  nombre_completo String @db.VarChar(255)
+  verificado Boolean @default(false)
+  direccion_ip String? @db.VarChar(255)
+  fecha_consentimiento DateTime @default(now())
+}
+
 

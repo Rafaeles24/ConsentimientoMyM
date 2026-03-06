@@ -11,7 +11,7 @@ export class ProxyIpService {
         return clientIp;
     }
 
-    async saveIpAddress(IdClient: number, ip: string) {
+/*     async saveIpAddress(IdClient: number, ip: string) {
         try {
             return await this.prisma.form.update({
                 where: { id: IdClient },
@@ -20,5 +20,5 @@ export class ProxyIpService {
         } catch (error) {
             throw new InternalServerErrorException(`Error al guardar la dirección IP: ${error.message}`);
         }
-    }
+    } */
 }
