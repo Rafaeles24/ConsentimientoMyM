@@ -1,15 +1,14 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { CreateConsentimientoDto } from './dto/create-consentimiento.dto';
-import { UpdateConsentimientoDto } from './dto/update-consentimiento.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ConsentimientoService {
   constructor ( private readonly prisma: PrismaService ) {}
 
-  async create(dto: CreateConsentimientoDto) {
+  async create(dto: CreateConsentimientoDto, ip: string) {
     try {
-      return this.prisma.$transaction(async (tx) => {
+      return this.prisma.$transaction(async (tx: any) => {
         const origenMap = {
           DEMO: tx.demo_Telecom,
           ENERGIA: tx.energia_Global_Spain,
@@ -18,6 +17,11 @@ export class ConsentimientoService {
         const origen = origenMap[dto.origen];
 
         if (!origen) throw new BadRequestException(`El origen no es valido`);
+
+        const existeIp = await origen.findFirst({
+          where: { direccion_id: ip }
+        });
+        if (existeIp) throw new UnauthorizedException(`Ya existe un consentimiento desde esta direccion.`);
 
         const existeDni = await origen.findUnique({
           where: { dni: dto.dni }
@@ -31,16 +35,22 @@ export class ConsentimientoService {
 
         if (dto.verificado !== true) throw new UnauthorizedException(`Debes Aceptar los terminos y condiciones de tu consentimiento.`);
 
-
-
-        return await origen.create({
+        const consentimiento = await origen.create({
           data: {
-            
+            dni: dto.dni,
+            num_telefono: dto.num_telefono,
+            num_contacto: dto.num_contacto,
+            nombre_completo: dto.nombre_completo,
+            verificado: dto.verificado,
+            direccion_ip: ip
           }
-        })
+        });
+
+        return { status: 201, ip: consentimiento.ip };
       })
     } catch (error) {
-      
+      if (error instanceof BadRequestException || error instanceof UnauthorizedException) throw error;
+      throw new InternalServerErrorException(`Ocurrio un error inesperado al crear el consentimiento: ${error}`);
     }
   }
 }

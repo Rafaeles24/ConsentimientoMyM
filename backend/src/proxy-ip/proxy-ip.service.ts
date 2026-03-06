@@ -10,15 +10,4 @@ export class ProxyIpService {
         const clientIp = getClientIp(req);
         return clientIp;
     }
-
-/*     async saveIpAddress(IdClient: number, ip: string) {
-        try {
-            return await this.prisma.form.update({
-                where: { id: IdClient },
-                data: { ip_address: ip }
-            });
-        } catch (error) {
-            throw new InternalServerErrorException(`Error al guardar la dirección IP: ${error.message}`);
-        }
-    } */
 }
