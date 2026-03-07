@@ -69,12 +69,12 @@ export class ConsentimientoService {
         const existeDni = await origen.findUnique({
           where: { dni: dto.dni }
         });
-        if (existeDni) throw new BadRequestException(`El DNI ya esta registrado.`);
+        if (existeDni) throw new BadRequestException(`Ya existe un registro asociado al DNI introducido`);
 
         const existeTelefono = await origen.findUnique({
           where: { num_telefono: dto.num_telefono }
         });
-        if (existeTelefono) throw new BadRequestException(`El numero de telefono ya esta siendo usado. Por favor, proporcione otro numero.`);
+        if (existeTelefono) throw new BadRequestException(`Ya existe un registro asociado al número de teléfono introducido.`);
 
         if (dto.verificado !== true) throw new UnauthorizedException(`Debes Aceptar los terminos y condiciones de tu consentimiento.`);
 

@@ -1,4 +1,5 @@
 "use client";
+import { ChangeEvent } from 'react';
 import styles from './ui.module.css';
 
 export default function EditableInput(
@@ -13,7 +14,7 @@ export default function EditableInput(
         value: string;
         maxLength?: number;
         error?: string | null;
-        onChange: (e: any) => void;
+        onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     }
 ) {
     return (

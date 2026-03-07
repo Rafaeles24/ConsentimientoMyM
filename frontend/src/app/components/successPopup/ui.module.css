@@ -14,4 +14,13 @@
 
 .card {
     background-color: white;
+    padding: 20px;
+    color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }

@@ -5,11 +5,13 @@ import styles from "./ui.module.css";
 export default function Checkbox({
     content,
     checked,
+    error=null,
     onChange,
     required = false
 }: {
     content: string;
     checked: boolean;
+    error?: string | null;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
 }) {
@@ -25,6 +27,7 @@ export default function Checkbox({
             <span className={styles.text}>
                 {content}
                 {required && <span className={styles.required}> *</span>}
+                { error && <p className={styles.error}>{error}</p>}
             </span>
         </label>
     );

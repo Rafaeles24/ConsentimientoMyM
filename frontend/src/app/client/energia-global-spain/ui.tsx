@@ -11,6 +11,7 @@ import ConsentSection from "@/app/components/consentSection/ui";
 import Checkbox from "@/app/components/checkbox/ui";
 import ButtonSubmit from "@/app/components/button/ui";
 import SuccessPopup from "@/app/components/successPopup/ui";
+import ErrorToast from "@/app/components/errorToast/ui";
 
 export default function EnergiaGlobalSpainConsentimientoClient() {
     const [ dni, setDni ] = useState<string>("");
@@ -35,14 +36,55 @@ export default function EnergiaGlobalSpainConsentimientoClient() {
 
     const [ ip, setIp ] = useState<string>("");
 
+    const resetErrores = () => {
+        setDniErr(null);
+        setNumTelefonoErr(null);
+        setNumContactoErr(null);
+        setNombreCompletoErr(null);
+        setVerificadoErr(null);
+        setError(null);
+    }
+
+    const resetForm = () => {
+        setOpen(false);
+        setIp("");
+        setDni("");
+        setNumTelefono("");
+        setNumContacto("");
+        setNombreCompleto("");
+        setVerificado(false);
+
+        resetErrores();
+    }
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!dni) return setDniErr("Debes colocar el DNI");
-        if (!numTelefono) return setNumTelefonoErr("Debes ingresar un numero de telefono");
-        if (!numContacto) return setNumContactoErr("Debes ingresar un numero de contacto.");
-        if (!nombreCompleto) return setNombreCompletoErr("Debes ingresar tu nombre");
-        if (verificado === false) return setVerificadoErr("Debes aceptar los terminos y condiciones.") 
+        resetErrores();
+        let hasError = false;
+
+        if (!dni) {
+            setDniErr("Debes colocar el DNI");
+            hasError = true;
+        }
+        if (!numTelefono) {
+            setNumTelefonoErr("Debes ingresar un numero de telefono");
+            hasError = true;
+        }
+        if (!numContacto) {
+            setNumContactoErr("Debes ingresar un numero de contacto.");
+            hasError = true;
+        }
+        if (!nombreCompleto) {
+            setNombreCompletoErr("Debes ingresar tu nombre");
+            hasError = true;
+        }
+        if (verificado === false) {
+            setVerificadoErr("Debes aceptar los terminos y condiciones.") ;
+            hasError = true;
+        }
+
+        if (hasError) return;
 
         await submitData({
             dni: dni,
@@ -79,8 +121,8 @@ export default function EnergiaGlobalSpainConsentimientoClient() {
                 || `Error HTTP ${res.status}`;
                 
             setLoading(false);
-            return alert(msg);
-            /* return setError(msg); */
+            setError(msg);
+            return;
         }
 
         const success = data as IpAddressResponse;
@@ -92,6 +134,12 @@ export default function EnergiaGlobalSpainConsentimientoClient() {
 
     return (
         <div className={styles.bg}>
+            { error &&
+                <ErrorToast
+                    message={error}
+                    onClose={() => setError(null)}
+                />
+            }
             <div className={styles.card}>
                 <p className={styles.desc}>
                     Si estás interesado en recibir una oferta de telecomunicaciones o energía rellena el formulario y nos pondremos en contacto contigo.
@@ -107,12 +155,12 @@ export default function EnergiaGlobalSpainConsentimientoClient() {
                     value={dni}
                     error={dniErr}
                     onChange={(e) => setDni(e.target.value)}
-                    maxLength={8}
+                    maxLength={18}
                     />
                     <EditableInput
                         label="Telefono"
                         value={numTelefono}
-                        error={numContactoErr}
+                        error={numTelefonoErr}
                         onChange={(e) => setNumTelefono(e.target.value)}
                         maxLength={9}
                     />
@@ -137,6 +185,7 @@ export default function EnergiaGlobalSpainConsentimientoClient() {
                             content="He leído y acepto la Política de Privacidad y consiento que  Energía Global Spain SI trate mis datos para enviarme información comercial sobre sus productos y servicios, por medios telefónicos, SMS, mensajería instantánea (como WhatsApp) y correo electrónico, incluso por medios automatizados."
                             checked={verificado}
                             onChange={(e) => setVerificado(e.target.checked)}
+                            error={verificadoErr}
                         />
                     </div>
 
@@ -152,13 +201,8 @@ export default function EnergiaGlobalSpainConsentimientoClient() {
                 <SuccessPopup
                     ip={ip}
                     onClose={() => {
-                        setOpen(false)
-                        setIp("")
-                        setDni("")
-                        setNumTelefono("")
-                        setNumContacto("")
-                        setNombreCompleto("")
-                        setVerificado(false)
+                        setOpen(false);
+                        resetForm();
                     }}
                 />
             }
