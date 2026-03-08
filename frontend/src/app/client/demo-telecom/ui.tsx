@@ -87,7 +87,7 @@ export default function DemoTelecomConsentimientoClient() {
 
         await submitData({
             dni: dni,
-            origen: "ENERGIA",
+            origen: "DEMO",
             num_telefono: numTelefono,
             num_contacto: numContacto,
             nombre_completo: nombreCompleto,
