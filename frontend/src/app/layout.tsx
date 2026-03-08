@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Consentimiento Vodafone",
-  description: "Formulario de consentimiento para Vodafone",
+  title: "DROPLET DO - MYM CONSENTIMIENTOS",
+  description: "Formulario de consentimientos",
 };
 
 export default function RootLayout({
